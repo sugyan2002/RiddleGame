@@ -4,6 +4,7 @@ public class RiddleGame {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int score = 0;
+        int hintsUsed = 0;
 
         // Define an array of riddles and their corresponding answers.
         String[] riddles = {
@@ -13,9 +14,9 @@ public class RiddleGame {
         };
 
         String[] answers = {
-            "An echo",
-            "Footsteps",
-            "A fire"
+            "an echo",
+            "footsteps",
+            "a fire"
         };
 
         // Define hints for each riddle.
@@ -37,30 +38,43 @@ public class RiddleGame {
             System.out.println("Riddle: " + selectedRiddle);
 
             // Get user's answer.
-            String userAnswer = scanner.nextLine();
+            String userAnswer = scanner.nextLine().trim().toLowerCase();
 
-            if (userAnswer.equalsIgnoreCase(correctAnswer)) {
+            if (userAnswer.equals(correctAnswer)) {
                 System.out.println("Correct!");
                 score++;
             } else {
                 // If the answer is incorrect, offer a hint.
                 System.out.println("Wrong! Would you like a hint? (yes/no)");
-                String giveHint = scanner.nextLine().toLowerCase();
+                String giveHint = scanner.nextLine().trim().toLowerCase();
                 if (giveHint.equals("yes")) {
                     System.out.println(hint);
+                    hintsUsed++;
+                }
+
+                // Get another chance to answer after the hint.
+                System.out.println("Try again:");
+                userAnswer = scanner.nextLine().trim().toLowerCase();
+
+                if (userAnswer.equals(correctAnswer)) {
+                    System.out.println("Correct!");
+                    score++;
+                } else {
+                    System.out.println("Wrong again! The correct answer was: " + correctAnswer);
                 }
             }
 
             // Allow the user to continue or exit.
             System.out.println("Continue playing? (yes/no)");
-            String playAgain = scanner.nextLine().toLowerCase();
+            String playAgain = scanner.nextLine().trim().toLowerCase();
             if (!playAgain.equals("yes")) {
                 break;
             }
         }
 
-        // Display final score.
+        // Display final score and hints used.
         System.out.println("Your final score: " + score);
+        System.out.println("Hints used: " + hintsUsed);
         System.out.println("Thanks for playing!");
     }
 }
